@@ -1,0 +1,7 @@
+# 安装核心依赖
+requests>=2.31.0
+tavily-python>=0.3.0
+openai>=1.0.0
+
+# 可选：安装其他常用包
+python-dotenv>=1.0.0
