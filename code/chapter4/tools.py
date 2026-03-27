@@ -21,13 +21,16 @@ def search(query: str) -> str:
             "engine": "google",
             "q": query,
             "api_key": api_key,
-            "gl": "cn",  # 国家代码
-            "hl": "zh-cn", # 语言代码
+            "gl": "cn",
+            "hl": "zh-cn",
+            "no_cache": True,
         }
         
         client = SerpApiClient(params)
         results = client.get_dict()
         
+        # print(f"results = {results}")
+
         # 智能解析：优先寻找最直接的答案
         if "answer_box_list" in results:
             return "\n".join(results["answer_box_list"])
@@ -38,6 +41,7 @@ def search(query: str) -> str:
         if "organic_results" in results and results["organic_results"]:
             # 如果没有直接答案，则返回前三个有机结果的摘要
             snippets = [
+                # i+1 是因为 enumerate 默认从 0 开始
                 f"[{i+1}] {res.get('title', '')}\n{res.get('snippet', '')}"
                 for i, res in enumerate(results["organic_results"][:3])
             ]
@@ -97,9 +101,9 @@ if __name__ == '__main__':
     print(toolExecutor.getAvailableTools())
 
     # 4. 智能体的Action调用，这次我们问一个实时性的问题
-    print("\n--- 执行 Action: Search['英伟达最新的GPU型号是什么'] ---")
+    print("\n--- 执行 Action: Search['英伟达 最新 GPU 型号'] ---")
     tool_name = "Search"
-    tool_input = "英伟达最新的GPU型号是什么"
+    tool_input = "英伟达 最新 GPU 型号"
 
     tool_function = toolExecutor.getTool(tool_name)
     if tool_function:

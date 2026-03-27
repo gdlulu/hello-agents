@@ -1,5 +1,15 @@
 services:
   app:
+    image: hello-agents
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
     build:
       context: .
       dockerfile: Dockerfile

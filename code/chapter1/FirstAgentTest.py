@@ -109,6 +109,7 @@ available_tools = {
 }
 
 from openai import OpenAI
+from openai.types.chat import ChatCompletionMessageParam
 
 class OpenAICompatibleClient:
     """
@@ -122,7 +123,7 @@ class OpenAICompatibleClient:
         """调用LLM API来生成回应。"""
         print("正在调用大语言模型...")
         try:
-            messages = [
+            messages: list[ChatCompletionMessageParam] = [
                 {'role': 'system', 'content': system_prompt},
                 {'role': 'user', 'content': prompt}
             ]
@@ -131,7 +132,15 @@ class OpenAICompatibleClient:
                 messages=messages,
                 stream=False
             )
+
+            print("%%%%%%%%%% DEBUG %%%%%%%%%%")
+            print(response)
+            print("%%%%%%%%%% DEBUG %%%%%%%%%%")
+            
             answer = response.choices[0].message.content
+            if answer is None:
+                return "错误：语言模型返回了空响应。"
+
             print("大语言模型响应成功。")
             return answer
         except Exception as e:
@@ -143,8 +152,8 @@ import re
 # --- 1. 配置LLM客户端 ---
 # 请根据您使用的服务，将这里替换成对应的凭证和地址
 API_KEY = "sk-gciGSyeYXPTz63o8Ff76D60e336140A997F2E54dCa778700"
-BASE_URL = "https://free.v36.cm"
-MODEL_ID = "gpt-4o"
+BASE_URL = "https://free.v36.cm/v1"
+MODEL_ID = "gpt-4o-mini"
 TAVILY_API_KEY="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"
 os.environ['TAVILY_API_KEY'] = "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"
 

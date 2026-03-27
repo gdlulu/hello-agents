@@ -1,0 +1,4 @@
+{
+    "reportOptionalMemberAccess": "warning",
+    "reportReturnType": "warning"
+}

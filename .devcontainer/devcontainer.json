@@ -11,5 +11,9 @@
 		  "ms-python.vscode-pylance"
 		]
 	  }
+	},
+	"runArgs": ["--gpus", "all"],
+	"containerEnv": {
+	  "NVIDIA_DRIVER_CAPABILITIES": "compute,utility"
 	}
   }

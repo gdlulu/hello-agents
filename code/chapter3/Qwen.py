@@ -16,7 +16,10 @@ print(f"Using device: {device}")
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
 # 加载模型，并将其移动到指定设备
-model = AutoModelForCausalLM.from_pretrained(model_id).to(device)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    torch_dtype="auto"
+).to(device)
 
 print("模型和分词器加载完成！")
 
@@ -42,7 +45,8 @@ print(model_inputs)
 # 使用模型生成回答
 # max_new_tokens 控制了模型最多能生成多少个新的Token
 generated_ids = model.generate(
-    model_inputs.input_ids,
+    input_ids=model_inputs.input_ids,
+    attention_mask=model_inputs.attention_mask,
     max_new_tokens=512
 )
 

@@ -33,6 +33,13 @@ rules = {
         "How did your father make you feel?",
         "What has your father taught you?"
     ],
+    # new -----
+    r'.* (work|study) .*': [
+        "How do you feel about your {0}?",
+        "How is your current {0} going?",
+        "Tell me more about your {0}."
+    ],
+    # new -----
     r'.*': [
         "Please tell me more.",
         "Let's change focus a bit... Tell me about your family.",
@@ -41,14 +48,14 @@ rules = {
 }
 
 # 定义代词转换规则
-pronoun_swap = {
+pronoun_swap: dict[str, str] = {
     "i": "you", "you": "i", "me": "you", "my": "your",
     "am": "are", "are": "am", "was": "were", "i'd": "you would",
     "i've": "you have", "i'll": "you will", "yours": "mine",
     "mine": "yours"
 }
 
-def swap_pronouns(phrase):
+def swap_pronouns(phrase: str) -> str:
     """
     对输入短语中的代词进行第一/第二人称转换
     """
